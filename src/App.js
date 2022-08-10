@@ -31,6 +31,17 @@ const ToWatch = (props) => {
   )
 }
 
+const Filter = (props) => {
+  return (
+    <div>
+      filter <input
+        value={props.filter}
+        onChange={props.onFilterChange}
+      />
+    </div>
+  )
+}
+
 const App = () => {
   const [anime, setAnime] = useState([
     {
@@ -110,7 +121,7 @@ const App = () => {
 
       <h3>anime to watch</h3>
 
-      filter <input value={filter} onChange={handleFilter} />
+      <Filter filter={filter} onFilterChange={handleFilter} />
 
       <ToWatch anime={filteredAnime} handleWatched={handleWatched} />
     </div>
