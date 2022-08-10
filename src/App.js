@@ -1,5 +1,15 @@
 import { useState } from "react"
 
+const AddAnime = (props) => {
+  return (
+    <form onSubmit={props.onSubmit}>
+      name <input value={props.name} onChange={props.onNameChange} /><br />
+      link <input value={props.link} onChange={props.onLinkChange} /><br />
+      <button>save</button>
+    </form>
+  )
+}
+
 const Anime = (props) => {
   return (
     <li>
@@ -12,7 +22,7 @@ const Anime = (props) => {
 const ToWatch = (props) => {
   return (
     <ul>
-      {props.anime.map(a => <Anime key={a.id} anime={a} handleWatched={() => props.handleWatched(a.id)}/>)}
+      {props.anime.map(a => <Anime key={a.id} anime={a} handleWatched={() => props.handleWatched(a.id)} />)}
     </ul>
   )
 }
@@ -53,7 +63,7 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    
+
     console.log(`save anime ${newName}`)
     const newAnime = {
       name: newName,
@@ -75,15 +85,17 @@ const App = () => {
 
       <h3>add to watchlist</h3>
 
-      <form onSubmit={handleSubmit}>
-        name <input value={newName} onChange={handleNewName} /><br />
-        link <input value={newLink} onChange={handleNewLink} /><br />
-        <button>save</button>
-      </form>
+      <AddAnime
+        onSubmit={handleSubmit}
+        name={newName}
+        onNameChange={handleNewName}
+        link={newLink}
+        onLinkChange={handleNewLink}
+      />
 
       <h3>anime to watch</h3>
 
-      <ToWatch anime={anime} handleWatched={handleWatched}/>
+      <ToWatch anime={anime} handleWatched={handleWatched} />
     </div>
   )
 }
