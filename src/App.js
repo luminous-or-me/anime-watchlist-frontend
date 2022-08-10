@@ -1,13 +1,17 @@
 import { useState } from "react"
 
 const AddAnime = (props) => {
-  return (
-    <form onSubmit={props.onSubmit}>
-      name <input value={props.name} onChange={props.onNameChange} /><br />
-      link <input value={props.link} onChange={props.onLinkChange} /><br />
-      <button>save</button>
-    </form>
-  )
+  if (!props.addHidden) {
+    return (
+      <form onSubmit={props.onSubmit}>
+        name <input value={props.name} onChange={props.onNameChange} /><br />
+        link <input value={props.link} onChange={props.onLinkChange} /><br />
+        <button>save</button>
+      </form>
+    )
+  } else {
+    return null
+  }
 }
 
 const Anime = (props) => {
@@ -47,6 +51,7 @@ const App = () => {
   ])
   const [newName, setNewName] = useState('')
   const [newLink, setNewLink] = useState('')
+  const [addHidden, setAddHidden] = useState(true)
 
   const handleWatched = (id) => {
     console.log(`watched ${id}`)
@@ -83,7 +88,9 @@ const App = () => {
     <div>
       <h2>Anime Watchlist</h2>
 
-      <h3>add to watchlist</h3>
+      <button onClick={() => setAddHidden(!addHidden)}>
+        {addHidden ? 'add to watchlist' : 'hide'}
+      </button>
 
       <AddAnime
         onSubmit={handleSubmit}
@@ -91,6 +98,7 @@ const App = () => {
         onNameChange={handleNewName}
         link={newLink}
         onLinkChange={handleNewLink}
+        addHidden={addHidden}
       />
 
       <h3>anime to watch</h3>
