@@ -35,23 +35,26 @@ const App = () => {
   const [anime, setAnime] = useState([
     {
       id: 1,
-      name: "anime 1",
+      name: "My Hero Academia",
       link: "link 1"
     },
     {
       id: 2,
-      name: "anime 2",
+      name: "Demon Slayer",
       link: "link 2"
     },
     {
       id: 3,
-      name: "anime 3",
+      name: "Cowboy Bebop",
       link: "link 3"
     }
   ])
   const [newName, setNewName] = useState('')
   const [newLink, setNewLink] = useState('')
   const [addHidden, setAddHidden] = useState(true)
+  const [filter, setFilter] = useState('')
+
+  const filteredAnime = anime.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))
 
   const handleWatched = (id) => {
     console.log(`watched ${id}`)
@@ -84,6 +87,10 @@ const App = () => {
     setNewLink('')
   }
 
+  const handleFilter = (event) => {
+    setFilter(event.target.value)
+  }
+
   return (
     <div>
       <h2>Anime Watchlist</h2>
@@ -103,7 +110,9 @@ const App = () => {
 
       <h3>anime to watch</h3>
 
-      <ToWatch anime={anime} handleWatched={handleWatched} />
+      filter <input value={filter} onChange={handleFilter} />
+
+      <ToWatch anime={filteredAnime} handleWatched={handleWatched} />
     </div>
   )
 }
