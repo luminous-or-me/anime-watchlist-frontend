@@ -35,15 +35,51 @@ const App = () => {
       link: "link 3"
     }
   ])
+  const [newName, setNewName] = useState('')
+  const [newLink, setNewLink] = useState('')
 
   const handleWatched = (id) => {
     console.log(`watched ${id}`)
     setAnime(anime.filter(a => a.id !== id))
   }
 
+  const handleNewName = (event) => {
+    setNewName(event.target.value)
+  }
+
+  const handleNewLink = (event) => {
+    setNewLink(event.target.value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    
+    console.log(`save anime ${newName}`)
+    const newAnime = {
+      name: newName,
+      link: newLink,
+      id: Math.floor(Math.random() * 10000)
+    }
+
+    console.log(newAnime)
+
+    setAnime(anime.concat(newAnime))
+
+    setNewName('')
+    setNewLink('')
+  }
+
   return (
     <div>
       <h2>Anime Watchlist</h2>
+
+      <h3>add to watchlist</h3>
+
+      <form onSubmit={handleSubmit}>
+        name <input value={newName} onChange={handleNewName} /><br />
+        link <input value={newLink} onChange={handleNewLink} /><br />
+        <button>save</button>
+      </form>
 
       <h3>anime to watch</h3>
 
