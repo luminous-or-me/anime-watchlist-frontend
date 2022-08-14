@@ -42,6 +42,14 @@ const Filter = (props) => {
   )
 }
 
+const History = (props) => {
+  return (
+    <div>
+      {props.history.map(a => <p key={a.id}>{a.name}</p>)}
+    </div>
+  )
+}
+
 const App = () => {
   const [anime, setAnime] = useState([
     {
@@ -152,7 +160,7 @@ const App = () => {
 
       <h3>History</h3>
 
-      {history.map(a => <p key={a.id}>{a.name}</p>)}
+      <History history={history} />
     </div>
   )
 }
