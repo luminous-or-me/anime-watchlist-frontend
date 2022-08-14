@@ -89,7 +89,12 @@ const App = () => {
 
   const handleWatched = (id) => {
     console.log(`watched ${id}`)
-    setAnime(anime.filter(a => a.id !== id))
+    
+    const foundAnime = anime.find(a => a.id === id)
+
+    const newAnime = { ...foundAnime, watched: true }
+
+    setAnime(anime.map(a => a.id !== id? a : newAnime))
   }
 
   const handleNewName = (event) => {
@@ -147,7 +152,7 @@ const App = () => {
 
       <h3>History</h3>
 
-      {history.map(a => <p>{a.name}</p>)}
+      {history.map(a => <p key={a.id}>{a.name}</p>)}
     </div>
   )
 }
