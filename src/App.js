@@ -98,15 +98,20 @@ const App = () => {
     const newAnime = {
       name: newName,
       link: newLink,
-      id: Math.floor(Math.random() * 10000)
+      watched: false
     }
 
     console.log(newAnime)
 
-    setAnime(anime.concat(newAnime))
+    axios.post('http://localhost:3001/api/anime', newAnime)
+      .then(response => {
+        console.log(response.data)
 
-    setNewName('')
-    setNewLink('')
+        setAnime(anime.concat(response.data))
+
+        setNewName('')
+        setNewLink('')
+      })
   }
 
   const handleFilter = (event) => {
