@@ -47,17 +47,32 @@ const App = () => {
     {
       id: 1,
       name: "My Hero Academia",
-      link: "link 1"
+      link: "link 1",
+      watched: false
     },
     {
       id: 2,
       name: "Demon Slayer",
-      link: "link 2"
+      link: "link 2",
+      watched: false
     },
     {
       id: 3,
       name: "Cowboy Bebop",
-      link: "link 3"
+      link: "link 3",
+      watched: false
+    },
+    {
+      id: 4,
+      name: 'Steins;Gate',
+      link: 'link 4',
+      watched: true
+    },
+    {
+      id: 5,
+      name: 'Tomodachi Game',
+      link: 'link 5',
+      watched: true
     }
   ])
   const [newName, setNewName] = useState('')
@@ -65,7 +80,12 @@ const App = () => {
   const [addHidden, setAddHidden] = useState(true)
   const [filter, setFilter] = useState('')
 
-  const filteredAnime = anime.filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))
+  const shownAnime = anime
+    .filter(a => !a.watched)
+    .filter(a => a.name.toLowerCase().includes(filter.toLowerCase()))
+
+  const history = anime
+    .filter(a => a.watched)
 
   const handleWatched = (id) => {
     console.log(`watched ${id}`)
@@ -123,7 +143,11 @@ const App = () => {
 
       <Filter filter={filter} onFilterChange={handleFilter} />
 
-      <ToWatch anime={filteredAnime} handleWatched={handleWatched} />
+      <ToWatch anime={shownAnime} handleWatched={handleWatched} />
+
+      <h3>History</h3>
+
+      {history.map(a => <p>{a.name}</p>)}
     </div>
   )
 }
