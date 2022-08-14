@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 const AddAnime = (props) => {
   if (!props.addHidden) {
@@ -51,42 +52,19 @@ const History = (props) => {
 }
 
 const App = () => {
-  const [anime, setAnime] = useState([
-    {
-      id: 1,
-      name: "My Hero Academia",
-      link: "https://www.wcofun.com/anime/boku-no-hero-academia-english-subbed",
-      watched: false
-    },
-    {
-      id: 2,
-      name: "Demon Slayer",
-      link: "https://www.wcofun.com/anime/demon-slayer",
-      watched: false
-    },
-    {
-      id: 3,
-      name: "Cowboy Bebop",
-      link: "https://www.wcofun.com/anime/cowboy-bebop",
-      watched: false
-    },
-    {
-      id: 4,
-      name: 'Steins;Gate',
-      link: 'https://www.wcofun.com/anime/steins-gate',
-      watched: true
-    },
-    {
-      id: 5,
-      name: 'Tomodachi Game',
-      link: 'https://www.wcofun.com/anime/tomodachi-game',
-      watched: true
-    }
-  ])
+  const [anime, setAnime] = useState([])
   const [newName, setNewName] = useState('')
   const [newLink, setNewLink] = useState('')
   const [addHidden, setAddHidden] = useState(true)
   const [filter, setFilter] = useState('')
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/api/anime')
+      .then(response => {
+        console.log(response.data)
+        setAnime(response.data)
+      })
+  }, [])
 
   const shownAnime = anime
     .filter(a => !a.watched)
@@ -97,12 +75,12 @@ const App = () => {
 
   const handleWatched = (id) => {
     console.log(`watched ${id}`)
-    
+
     const foundAnime = anime.find(a => a.id === id)
 
     const newAnime = { ...foundAnime, watched: true }
 
-    setAnime(anime.map(a => a.id !== id? a : newAnime))
+    setAnime(anime.map(a => a.id !== id ? a : newAnime))
   }
 
   const handleNewName = (event) => {
