@@ -80,7 +80,13 @@ const App = () => {
 
     const newAnime = { ...foundAnime, watched: true }
 
-    setAnime(anime.map(a => a.id !== id ? a : newAnime))
+    axios
+      .put(`http://localhost:3001/api/anime/${id}`, newAnime)
+      .then(response => {
+        console.log(response.data)
+
+        setAnime(anime.map(a => a.id !== id ? a : response.data))
+      })
   }
 
   const handleNewName = (event) => {
