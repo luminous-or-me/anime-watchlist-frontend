@@ -17,7 +17,7 @@ const AddAnime = (props) => {
 const Anime = (props) => {
   return (
     <li>
-      {props.anime.name}
+      <a href={props.anime.link} target="blank">{props.anime.name}</a>
       <button onClick={props.handleWatched}>watched</button>
     </li>
   )
@@ -55,31 +55,31 @@ const App = () => {
     {
       id: 1,
       name: "My Hero Academia",
-      link: "link 1",
+      link: "https://www.wcofun.com/anime/boku-no-hero-academia-english-subbed",
       watched: false
     },
     {
       id: 2,
       name: "Demon Slayer",
-      link: "link 2",
+      link: "https://www.wcofun.com/anime/demon-slayer",
       watched: false
     },
     {
       id: 3,
       name: "Cowboy Bebop",
-      link: "link 3",
+      link: "https://www.wcofun.com/anime/cowboy-bebop",
       watched: false
     },
     {
       id: 4,
       name: 'Steins;Gate',
-      link: 'link 4',
+      link: 'https://www.wcofun.com/anime/steins-gate',
       watched: true
     },
     {
       id: 5,
       name: 'Tomodachi Game',
-      link: 'link 5',
+      link: 'https://www.wcofun.com/anime/tomodachi-game',
       watched: true
     }
   ])
