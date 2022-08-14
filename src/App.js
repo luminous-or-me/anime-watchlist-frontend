@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import animeServices from "./services/animes"
 
 const AddAnime = (props) => {
   if (!props.addHidden) {
@@ -59,11 +59,9 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/anime')
-      .then(response => {
-        console.log(response.data)
-        setAnime(response.data)
-      })
+    animeServices
+      .getAll()
+      .then(anime => setAnime(anime))
   }, [])
 
   const shownAnime = anime
@@ -80,12 +78,10 @@ const App = () => {
 
     const newAnime = { ...foundAnime, watched: true }
 
-    axios
-      .put(`http://localhost:3001/api/anime/${id}`, newAnime)
-      .then(response => {
-        console.log(response.data)
-
-        setAnime(anime.map(a => a.id !== id ? a : response.data))
+    animeServices
+      .update(id, newAnime)
+      .then(newAnime => {
+        setAnime(anime.map(a => a.id !== id? a : newAnime))
       })
   }
 
@@ -109,12 +105,10 @@ const App = () => {
 
     console.log(newAnime)
 
-    axios.post('http://localhost:3001/api/anime', newAnime)
-      .then(response => {
-        console.log(response.data)
-
-        setAnime(anime.concat(response.data))
-
+    animeServices
+      .create(newAnime)
+      .then(newAnime => {
+        setAnime(anime.concat(newAnime))
         setNewName('')
         setNewLink('')
       })
