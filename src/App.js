@@ -18,31 +18,31 @@ const AddAnime = (props) => {
 const Anime = (props) => (
   <li>
     <a href={props.anime.link} target="blank">{props.anime.name}</a>
-    {props.anime.watched?
-    <button onClick={props.handleDelete}>delete</button>
-    :<button onClick={props.handleWatched}>watched</button>}
+    {props.anime.watched ?
+      <button onClick={props.handleDelete}>delete</button>
+      : <button onClick={props.handleWatched}>watched</button>}
   </li>
 )
 
 const ToWatch = (props) => (
-    <ul>
-      {props.anime.map(a => <Anime key={a.id} anime={a} handleWatched={() => props.handleWatched(a.id)} />)}
-    </ul>
+  <ul>
+    {props.anime.map(a => <Anime key={a.id} anime={a} handleWatched={() => props.handleWatched(a.id)} />)}
+  </ul>
 )
 
 const Filter = (props) => (
-    <div>
-      filter <input
-        value={props.filter}
-        onChange={props.onFilterChange}
-      />
-    </div>
+  <div>
+    filter <input
+      value={props.filter}
+      onChange={props.onFilterChange}
+    />
+  </div>
 )
 
 const History = (props) => (
-    <ul>
-      {props.history.map(a => <Anime key={a.id} anime={a} handleDelete={() => props.handleDelete(a.id)} />)}
-    </ul>
+  <ul>
+    {props.history.map(a => <Anime key={a.id} anime={a} handleDelete={() => props.handleDelete(a.id)} />)}
+  </ul>
 )
 
 const App = () => {
