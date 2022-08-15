@@ -15,44 +15,36 @@ const AddAnime = (props) => {
   }
 }
 
-const Anime = (props) => {
-  return (
-    <li>
-      <a href={props.anime.link} target="blank">{props.anime.name}</a>
-      <button onClick={props.handleWatched}>watched</button>
-    </li>
-  )
-}
+const Anime = (props) => (
+  <li>
+    <a href={props.anime.link} target="blank">{props.anime.name}</a>
+    <button onClick={props.handleWatched}>watched</button>
+  </li>
+)
 
-const ToWatch = (props) => {
-  return (
+const ToWatch = (props) => (
     <ul>
       {props.anime.map(a => <Anime key={a.id} anime={a} handleWatched={() => props.handleWatched(a.id)} />)}
     </ul>
-  )
-}
+)
 
-const Filter = (props) => {
-  return (
+const Filter = (props) => (
     <div>
       filter <input
         value={props.filter}
         onChange={props.onFilterChange}
       />
     </div>
-  )
-}
+)
 
-const History = (props) => {
-  return (
+const History = (props) => (
     <div>
       {props.history.map(a => <p key={a.id}>
         {a.name}
         <button onClick={() => props.handleDelete(a.id)}>delete</button>
       </p>)}
     </div>
-  )
-}
+)
 
 const App = () => {
   const [anime, setAnime] = useState([])
@@ -84,7 +76,7 @@ const App = () => {
     animeServices
       .update(id, newAnime)
       .then(newAnime => {
-        setAnime(anime.map(a => a.id !== id? a : newAnime))
+        setAnime(anime.map(a => a.id !== id ? a : newAnime))
       })
   }
 
