@@ -19,8 +19,8 @@ const Anime = (props) => (
   <li>
     <a href={props.anime.link} target="blank">{props.anime.name}</a>
     {props.anime.watched?
-    <button onClick={() => props.handleDelete(props.anime.id)}>delete</button>
-    :<button onClick={() => props.handleWatched(props.anime.id)}>watched</button>}
+    <button onClick={props.handleDelete}>delete</button>
+    :<button onClick={props.handleWatched}>watched</button>}
   </li>
 )
 
@@ -40,12 +40,9 @@ const Filter = (props) => (
 )
 
 const History = (props) => (
-    <div>
-      {props.history.map(a => <p key={a.id}>
-        {a.name}
-        <button onClick={() => props.handleDelete(a.id)}>delete</button>
-      </p>)}
-    </div>
+    <ul>
+      {props.history.map(a => <Anime key={a.id} anime={a} handleDelete={() => props.handleDelete(a.id)} />)}
+    </ul>
 )
 
 const App = () => {
