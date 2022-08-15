@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import animes from "./services/animes"
 import animeServices from "./services/animes"
 
 const AddAnime = (props) => {
