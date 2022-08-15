@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import animes from "./services/animes"
 import animeServices from "./services/animes"
 
 const AddAnime = (props) => {
@@ -46,7 +47,10 @@ const Filter = (props) => {
 const History = (props) => {
   return (
     <div>
-      {props.history.map(a => <p key={a.id}>{a.name}</p>)}
+      {props.history.map(a => <p key={a.id}>
+        {a.name}
+        <button onClick={() => props.handleDelete(a.id)}>delete</button>
+      </p>)}
     </div>
   )
 }
@@ -114,6 +118,17 @@ const App = () => {
       })
   }
 
+  const handleDelete = (id) => {
+    console.log(`remove ${id} from history`)
+
+    animeServices.remove(id)
+      .then(response => {
+        console.log('success')
+
+        setAnime(anime.filter(a => a.id !== id))
+      })
+  }
+
   const handleFilter = (event) => {
     setFilter(event.target.value)
   }
@@ -143,7 +158,7 @@ const App = () => {
 
       <h3>History</h3>
 
-      <History history={history} />
+      <History history={history} handleDelete={handleDelete} />
     </div>
   )
 }
