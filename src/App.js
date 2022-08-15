@@ -18,7 +18,9 @@ const AddAnime = (props) => {
 const Anime = (props) => (
   <li>
     <a href={props.anime.link} target="blank">{props.anime.name}</a>
-    <button onClick={props.handleWatched}>watched</button>
+    {props.anime.watched?
+    <button onClick={() => props.handleDelete(props.anime.id)}>delete</button>
+    :<button onClick={() => props.handleWatched(props.anime.id)}>watched</button>}
   </li>
 )
 
