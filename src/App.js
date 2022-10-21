@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import animeServices from "./services/animes"
+import loginServices from './services/login'
 
 const AddAnime = (props) => {
   const [name, setName] = useState('')
@@ -119,9 +120,25 @@ const App = () => {
     setFilter(event.target.value)
   }
 
-  const handleLogin = event => {
+  const handleLogin = async event => {
     event.preventDefault()
     console.log(`logging in with username ${username}`)
+
+    try {
+      const user = await loginServices.login({
+        username, 
+        password
+      })
+  
+      console.log(user)
+  
+      setUser(user)
+  
+      setUsername('')
+      setPassword('')
+    } catch (error) {
+      console.log(error.response.data.error)
+    }
   }
 
   if (!user) {
