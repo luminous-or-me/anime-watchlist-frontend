@@ -79,6 +79,14 @@ const App = () => {
   const [password, setPassword] = useState('')
 
   useEffect(() => {
+    const loggedInUser = JSON.parse(window.localStorage.getItem('loggedInUser'))
+  
+    if (loggedInUser) {
+      setUser(loggedInUser)
+    }
+  }, [])
+
+  useEffect(() => {
     animeServices
       .getAll()
       .then(anime => setAnime(anime))
@@ -126,14 +134,14 @@ const App = () => {
 
     try {
       const user = await loginServices.login({
-        username, 
+        username,
         password
       })
-  
-      console.log(user)
-  
+
+      window.localStorage.setItem('loggedInUser', JSON.stringify(user))
+
       setUser(user)
-  
+
       setUsername('')
       setPassword('')
     } catch (error) {
