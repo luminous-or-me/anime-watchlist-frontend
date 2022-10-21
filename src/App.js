@@ -80,7 +80,7 @@ const App = () => {
 
   useEffect(() => {
     const loggedInUser = JSON.parse(window.localStorage.getItem('loggedInUser'))
-  
+
     if (loggedInUser) {
       setUser(loggedInUser)
     }
@@ -149,6 +149,11 @@ const App = () => {
     }
   }
 
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedInUser')
+    setUser(null)
+  }
+
   if (!user) {
     return (
       <div>
@@ -182,7 +187,10 @@ const App = () => {
     <div>
       <h2>Anime Watchlist</h2>
 
-      <p>logged in as {user.name}</p>
+      <p>
+        logged in as {user.name} <button onClick={handleLogout}>log out</button>
+      </p>
+
       <button onClick={() => setAddHidden(!addHidden)}>
         {addHidden ? 'add to watchlist' : 'hide'}
       </button>
