@@ -182,6 +182,7 @@ const App = () => {
     <div>
       <h2>Anime Watchlist</h2>
 
+      <p>logged in as {user.name}</p>
       <button onClick={() => setAddHidden(!addHidden)}>
         {addHidden ? 'add to watchlist' : 'hide'}
       </button>
