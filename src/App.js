@@ -73,6 +73,9 @@ const App = () => {
 
   const [addHidden, setAddHidden] = useState(true)
   const [filter, setFilter] = useState('')
+  const [user, setUser] = useState(null)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   useEffect(() => {
     animeServices
@@ -114,6 +117,40 @@ const App = () => {
 
   const handleFilter = (event) => {
     setFilter(event.target.value)
+  }
+
+  const handleLogin = event => {
+    event.preventDefault()
+    console.log(`logging in with username ${username}`)
+  }
+
+  if (!user) {
+    return (
+      <div>
+        <h2>login to the application</h2>
+
+        <form onSubmit={handleLogin}>
+          <div>
+            <input
+              placeholder='username'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type='password'
+              placeholder='password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </div>
+          <button>
+            log in
+          </button>
+        </form>
+      </div>
+    )
   }
 
   return (
