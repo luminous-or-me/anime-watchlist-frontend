@@ -2,12 +2,35 @@ import { useEffect, useState } from "react"
 import animeServices from "./services/animes"
 
 const AddAnime = (props) => {
+  const [name, setName] = useState('')
+  const [link, setLink] = useState('')
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    console.log(`submitting anime ${name}`)
+  }
+
   if (!props.addHidden) {
     return (
-      <form onSubmit={props.onSubmit}>
-        name <input value={props.name} onChange={props.onNameChange} /><br />
-        link <input value={props.link} onChange={props.onLinkChange} /><br />
-        <button>save</button>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            value={name}
+            onChange={e => setName(e.target.value)}
+            placeholder='name'
+          />
+        </div>
+        <div>
+          <input
+            value={link}
+            onChange={e => setLink(e.target.value)}
+            placeholder='link'
+          />
+        </div>
+
+        <button type='submit'>
+          save
+        </button>
       </form>
     )
   } else {
@@ -47,8 +70,7 @@ const History = (props) => (
 
 const App = () => {
   const [anime, setAnime] = useState([])
-  const [newName, setNewName] = useState('')
-  const [newLink, setNewLink] = useState('')
+
   const [addHidden, setAddHidden] = useState(true)
   const [filter, setFilter] = useState('')
 
@@ -79,35 +101,6 @@ const App = () => {
       })
   }
 
-  const handleNewName = (event) => {
-    setNewName(event.target.value)
-  }
-
-  const handleNewLink = (event) => {
-    setNewLink(event.target.value)
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-
-    console.log(`save anime ${newName}`)
-    const newAnime = {
-      name: newName,
-      link: newLink,
-      watched: false
-    }
-
-    console.log(newAnime)
-
-    animeServices
-      .create(newAnime)
-      .then(newAnime => {
-        setAnime(anime.concat(newAnime))
-        setNewName('')
-        setNewLink('')
-      })
-  }
-
   const handleDelete = (id) => {
     console.log(`remove ${id} from history`)
 
@@ -132,11 +125,6 @@ const App = () => {
       </button>
 
       <AddAnime
-        onSubmit={handleSubmit}
-        name={newName}
-        onNameChange={handleNewName}
-        link={newLink}
-        onLinkChange={handleNewLink}
         addHidden={addHidden}
       />
 
