@@ -43,8 +43,15 @@ const App = () => {
       const addedAnime = await animeServices.create(newAnime)
       console.log(addedAnime)
       setAnime(anime.concat(addedAnime))
+
+      setSuccess(true)
+      setMessage(`added anime ${addedAnime.name}`)
+      setTimeout(() => setMessage(null), 5000)
     } catch (error) {
       console.log(error.response.data.error)
+      setSuccess(false)
+      setMessage(error.response.data.error)
+      setTimeout(() => setMessage(null), 5000)
     }
   }
 
