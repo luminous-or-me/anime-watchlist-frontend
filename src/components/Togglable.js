@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Togglable = (props) => {
+const Togglable = ({ children, buttonLabel }) => {
     const [hidden, setHidden] = useState(true)
 
     const visibleStyle = {
@@ -14,7 +14,7 @@ const Togglable = (props) => {
         <div>
             <div style={visibleStyle}>
                 <div>
-                    {props.children}
+                    {children}
                 </div>
                 <button onClick={() => setHidden(true)}>
                     cancel
@@ -22,7 +22,7 @@ const Togglable = (props) => {
             </div>
             <div style={hiddenStyle}>
                 <button onClick={() => setHidden(false)}>
-                    {props.buttonLabel}
+                    {buttonLabel}
                 </button>
             </div>
         </div>

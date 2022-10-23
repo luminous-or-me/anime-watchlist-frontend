@@ -1,8 +1,8 @@
 import Anime from "./Anime"
 
-const History = (props) => (
+const History = ({ history, handleDelete }) => (
     <ul>
-        {props.history.map(a => <Anime key={a.id} anime={a} handleDelete={() => props.handleDelete(a.id)} />)}
+        {history.map(a => <Anime key={a.id} anime={a} handleDelete={() => handleDelete(a.id)} />)}
     </ul>
 )
 

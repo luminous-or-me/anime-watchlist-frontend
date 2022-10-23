@@ -1,8 +1,8 @@
 import Anime from "./Anime"
 
-const ToWatch = (props) => (
+const ToWatch = ({ anime, handleWatched }) => (
     <ul>
-        {props.anime.map(a => <Anime key={a.id} anime={a} handleWatched={() => props.handleWatched(a.id)} />)}
+        {anime.map(a => <Anime key={a.id} anime={a} handleWatched={() => handleWatched(a.id)} />)}
     </ul>
 )
 

@@ -1,13 +1,13 @@
 import { useState } from "react"
 
-const AddAnimeForm = (props) => {
+const AddAnimeForm = ({ createAnime }) => {
     const [name, setName] = useState('')
     const [link, setLink] = useState('')
 
     const handleSubmit = async event => {
         event.preventDefault()
         console.log(`submitting anime ${name}`)
-        await props.createAnime({
+        await createAnime({
             name, link
         })
         setName('')

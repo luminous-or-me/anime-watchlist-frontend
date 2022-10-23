@@ -1,9 +1,11 @@
-const Anime = (props) => (
+const Anime = ({ anime, handleDelete, handleWatched }) => (
     <li>
-        <a href={props.anime.link} target="blank">{props.anime.name}</a>
-        {props.anime.watched ?
-            <button onClick={props.handleDelete}>delete</button>
-            : <button onClick={props.handleWatched}>watched</button>}
+        <a href={anime.link} target="blank">{anime.name}</a>
+        {
+            anime.watched ?
+                <button onClick={handleDelete}>delete</button>
+                : <button onClick={handleWatched}>watched</button>
+        }
     </li>
 )
 

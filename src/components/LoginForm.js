@@ -1,13 +1,13 @@
 import { useState } from "react"
 
-const LoginForm = (props) => {
+const LoginForm = ({ login }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const handleLogin = async event => {
         event.preventDefault()
         console.log(`logging in with username ${username}`)
-        await props.login({
+        await login({
             username,
             password
         })
