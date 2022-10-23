@@ -1,11 +1,11 @@
-const Notification = ({ message }) => {
+const Notification = ({ message, success }) => {
     const style = {
-        color: 'grey',
+        color: success? 'green' : 'red',
         backgroundColor: 'lightgrey',
         fontSize: '20px',
         borderStyle: 'solid',
         borderWidth: '3px',
-        borderColor: 'grey',
+        borderColor: success? 'green' : 'red',
         borderRadius: '10px',
         padding: '15px 5px',
     }
