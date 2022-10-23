@@ -1,143 +1,12 @@
 import { useEffect, useState } from "react"
 import animeServices from "./services/animes"
 import loginServices from './services/login'
-
-const AddAnimeForm = (props) => {
-  const [name, setName] = useState('')
-  const [link, setLink] = useState('')
-
-  const handleSubmit = async event => {
-    event.preventDefault()
-    console.log(`submitting anime ${name}`)
-    await props.createAnime({
-      name, link
-    })
-    setName('')
-    setLink('')
-  }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <input
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder='name'
-        />
-      </div>
-      <div>
-        <input
-          value={link}
-          onChange={e => setLink(e.target.value)}
-          placeholder='link'
-        />
-      </div>
-
-      <button type='submit'>
-        save
-      </button>
-    </form>
-  )
-}
-
-const Anime = (props) => (
-  <li>
-    <a href={props.anime.link} target="blank">{props.anime.name}</a>
-    {props.anime.watched ?
-      <button onClick={props.handleDelete}>delete</button>
-      : <button onClick={props.handleWatched}>watched</button>}
-  </li>
-)
-
-const ToWatch = (props) => (
-  <ul>
-    {props.anime.map(a => <Anime key={a.id} anime={a} handleWatched={() => props.handleWatched(a.id)} />)}
-  </ul>
-)
-
-const Filter = (props) => (
-  <div>
-    filter <input
-      value={props.filter}
-      onChange={props.onFilterChange}
-    />
-  </div>
-)
-
-const History = (props) => (
-  <ul>
-    {props.history.map(a => <Anime key={a.id} anime={a} handleDelete={() => props.handleDelete(a.id)} />)}
-  </ul>
-)
-
-const LoginForm = (props) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const handleLogin = async event => {
-    event.preventDefault()
-    console.log(`logging in with username ${username}`)
-    await props.login({
-      username,
-      password
-    })
-
-    setUsername('')
-    setPassword('')
-  }
-
-  return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <div>
-          <input
-            placeholder='username'
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            placeholder='password'
-            type='password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </div>
-        <button type='submit'>log in</button>
-      </form>
-    </div>
-  )
-}
-
-const Togglable = (props) => {
-  const [hidden, setHidden] = useState(true)
-
-  const visibleStyle = {
-    display: hidden ? 'none' : ''
-  }
-  const hiddenStyle = {
-    display: hidden ? '' : 'none'
-  }
-
-  return (
-    <div>
-      <div style={visibleStyle}>
-        <div>
-          {props.children}
-        </div>
-        <button onClick={() => setHidden(true)}>
-          cancel
-        </button>
-      </div>
-      <div style={hiddenStyle}>
-        <button onClick={() => setHidden(false)}>
-          {props.buttonLabel}
-        </button>
-      </div>
-    </div>
-  )
-}
+import AddAnimeForm from "./components/AddAnimeForm"
+import ToWatch from "./components/ToWatch"
+import Filter from "./components/Filter"
+import History from "./components/History"
+import LoginForm from "./components/LoginForm"
+import Togglable from "./components/Togglable"
 
 const App = () => {
   const [anime, setAnime] = useState([])
@@ -243,6 +112,7 @@ const App = () => {
 
       <Togglable buttonLabel='add anime'>
         <h2>add anime to watchlist</h2>
+
         <AddAnimeForm createAnime={createAnime} />
       </Togglable>
 
