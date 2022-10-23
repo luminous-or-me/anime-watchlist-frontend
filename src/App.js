@@ -69,14 +69,51 @@ const History = (props) => (
   </ul>
 )
 
+const LoginForm = (props) => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleLogin = async event => {
+    event.preventDefault()
+    console.log(`logging in with username ${username}`)
+    await props.login({
+      username,
+      password
+    })
+
+    setUsername('')
+    setPassword('')
+  }
+
+  return (
+    <div>
+      <form onSubmit={handleLogin}>
+        <div>
+          <input
+            placeholder='username'
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
+        </div>
+        <div>
+          <input
+            placeholder='password'
+            type='password'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+        </div>
+        <button type='submit'>log in</button>
+      </form>
+    </div>
+  )
+}
+
 const App = () => {
   const [anime, setAnime] = useState([])
-
   const [addHidden, setAddHidden] = useState(true)
   const [filter, setFilter] = useState('')
   const [user, setUser] = useState(null)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
 
   useEffect(() => {
     const loggedInUser = JSON.parse(window.localStorage.getItem('loggedInUser'))
@@ -128,22 +165,12 @@ const App = () => {
     setFilter(event.target.value)
   }
 
-  const handleLogin = async event => {
-    event.preventDefault()
-    console.log(`logging in with username ${username}`)
-
+  const login = async credentials => {
     try {
-      const user = await loginServices.login({
-        username,
-        password
-      })
-
+      const user = await loginServices.login(credentials)
+      
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
-
       setUser(user)
-
-      setUsername('')
-      setPassword('')
     } catch (error) {
       console.log(error.response.data.error)
     }
@@ -159,26 +186,7 @@ const App = () => {
       <div>
         <h2>login to the application</h2>
 
-        <form onSubmit={handleLogin}>
-          <div>
-            <input
-              placeholder='username'
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              type='password'
-              placeholder='password'
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </div>
-          <button>
-            log in
-          </button>
-        </form>
+        <LoginForm login={login} />
       </div>
     )
   }
