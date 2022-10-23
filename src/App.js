@@ -6,9 +6,14 @@ const AddAnime = (props) => {
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
     console.log(`submitting anime ${name}`)
+    await props.createAnime({
+      name, link
+    })
+    setName('')
+    setLink('')
   }
 
   if (!props.addHidden) {
@@ -120,6 +125,7 @@ const App = () => {
 
     if (loggedInUser) {
       setUser(loggedInUser)
+      animeServices.setToken(loggedInUser.token)
     }
   }, [])
 
@@ -135,6 +141,16 @@ const App = () => {
 
   const history = anime
     .filter(a => a.watched)
+
+  const createAnime = async newAnime => {
+    try {
+      const addedAnime = await animeServices.create(newAnime)
+      console.log(addedAnime)
+      setAnime(anime.concat(addedAnime))
+    } catch (error) {
+      console.log(error.response.data.error)
+    }
+  }
 
   const handleWatched = (id) => {
     console.log(`watched ${id}`)
@@ -168,9 +184,11 @@ const App = () => {
   const login = async credentials => {
     try {
       const user = await loginServices.login(credentials)
-      
+
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
       setUser(user)
+
+      animeServices.setToken(user.token)
     } catch (error) {
       console.log(error.response.data.error)
     }
@@ -204,6 +222,7 @@ const App = () => {
       </button>
 
       <AddAnime
+        createAnime={createAnime}
         addHidden={addHidden}
       />
 
