@@ -7,7 +7,7 @@ const Notification = ({ message, success }) => {
         borderWidth: '3px',
         borderColor: success? 'green' : 'red',
         borderRadius: '10px',
-        padding: '15px 5px',
+        padding: '15px 10px',
     }
 
     if (message) {

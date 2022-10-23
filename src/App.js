@@ -7,11 +7,14 @@ import Filter from "./components/Filter"
 import History from "./components/History"
 import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Togglable"
+import Notification from "./components/Notification"
 
 const App = () => {
   const [anime, setAnime] = useState([])
   const [filter, setFilter] = useState('')
   const [user, setUser] = useState(null)
+  const [message, setMessage] = useState(null)
+  const [success, setSuccess] = useState(true)
 
   useEffect(() => {
     const loggedInUser = JSON.parse(window.localStorage.getItem('loggedInUser'))
@@ -82,8 +85,15 @@ const App = () => {
       setUser(user)
 
       animeServices.setToken(user.token)
+
+      setSuccess(true)
+      setMessage(`logged in as ${user.name}`)
+      setTimeout(() => setMessage(null), 5000)
     } catch (error) {
       console.log(error.response.data.error)
+      setSuccess(false)
+      setMessage(error.response.data.error)
+      setTimeout(() => setMessage(null), 5000)
     }
   }
 
@@ -95,6 +105,11 @@ const App = () => {
   if (!user) {
     return (
       <div>
+        <Notification
+          message={message}
+          success={success}
+        />
+
         <h2>login to the application</h2>
 
         <LoginForm login={login} />
@@ -104,6 +119,11 @@ const App = () => {
 
   return (
     <div>
+      <Notification
+        message={message}
+        success={success}
+      />
+
       <h2>Anime Watchlist</h2>
 
       <p>
