@@ -100,6 +100,9 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedInUser')
     setUser(null)
+    setMessage('logged out')
+    setSuccess(true)
+    setTimeout(() => setMessage(null), 5000)
   }
 
   if (!user) {
