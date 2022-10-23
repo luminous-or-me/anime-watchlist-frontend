@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import animeServices from "./services/animes"
 import loginServices from './services/login'
 
-const AddAnime = (props) => {
+const AddAnimeForm = (props) => {
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
 
@@ -16,32 +16,28 @@ const AddAnime = (props) => {
     setLink('')
   }
 
-  if (!props.addHidden) {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            value={name}
-            onChange={e => setName(e.target.value)}
-            placeholder='name'
-          />
-        </div>
-        <div>
-          <input
-            value={link}
-            onChange={e => setLink(e.target.value)}
-            placeholder='link'
-          />
-        </div>
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <input
+          value={name}
+          onChange={e => setName(e.target.value)}
+          placeholder='name'
+        />
+      </div>
+      <div>
+        <input
+          value={link}
+          onChange={e => setLink(e.target.value)}
+          placeholder='link'
+        />
+      </div>
 
-        <button type='submit'>
-          save
-        </button>
-      </form>
-    )
-  } else {
-    return null
-  }
+      <button type='submit'>
+        save
+      </button>
+    </form>
+  )
 }
 
 const Anime = (props) => (
@@ -145,7 +141,6 @@ const Togglable = (props) => {
 
 const App = () => {
   const [anime, setAnime] = useState([])
-  const [addHidden, setAddHidden] = useState(true)
   const [filter, setFilter] = useState('')
   const [user, setUser] = useState(null)
 
@@ -246,14 +241,10 @@ const App = () => {
         logged in as {user.name} <button onClick={handleLogout}>log out</button>
       </p>
 
-      <button onClick={() => setAddHidden(!addHidden)}>
-        {addHidden ? 'add to watchlist' : 'hide'}
-      </button>
-
-      <AddAnime
-        createAnime={createAnime}
-        addHidden={addHidden}
-      />
+      <Togglable buttonLabel='add anime'>
+        <h2>add anime to watchlist</h2>
+        <AddAnimeForm createAnime={createAnime} />
+      </Togglable>
 
       <h3>anime to watch</h3>
 
