@@ -1,9 +1,9 @@
 import Anime from "./Anime"
 
 const ToWatch = ({ anime, handleWatched }) => (
-    <ul>
+    <div>
         {anime.map(a => <Anime key={a.id} anime={a} handleWatched={() => handleWatched(a.id)} />)}
-    </ul>
+    </div>
 )
 
 export default ToWatch
